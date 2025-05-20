@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvenTrack - Inventory Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --background: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .login-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .login-btn:hover {
+            background: var(--secondary);
+        }
+
+        .hero {
+            padding: 4rem 5%;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .features {
+            padding: 4rem 5%;
+            background: white;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            text-align: center;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            background: rgba(52, 152, 219, 0.1);
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .icon {
+            transform: scale(1.1);
+            background: var(--primary);
+            color: white;
+        }
+
+        .ri-2x {
+            font-size: 28px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--secondary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .hero { padding: 2rem 5%; }
+        }
+
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-box {
+            position: absolute;
+            border-radius: 8px;
+            pointer-events: none;
+            animation: float-around 15s linear infinite;
+        }
+
+        /* Remove grid-pattern div and its styles */
+
+        /* Different colored boxes */
+        .floating-box:nth-child(1) { background: #FF6B6B; }
+        .floating-box:nth-child(2) { background: #4ECDC4; }
+        .floating-box:nth-child(3) { background: #FFE66D; }
+        .floating-box:nth-child(4) { background: #96C93D; }
+        .floating-box:nth-child(5) { background: #45B7D1; }
+        .floating-box:nth-child(6) { background: #9B59B6; }
+        .floating-box:nth-child(7) { background: #3498DB; }
+        .floating-box:nth-child(8) { background: #E74C3C; }
+
+        @keyframes float-around {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 50px) rotate(90deg); }
+            50% { transform: translate(50px, 100px) rotate(180deg); }
+            75% { transform: translate(-50px, 50px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        @keyframes float-around-alt {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(0.8);
+            }
+            33% {
+                transform: translate(-50px, 100px) rotate(120deg) scale(1);
+            }
+            66% {
+                transform: translate(100px, -50px) rotate(240deg) scale(0.9);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg) scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation" id="bgAnimation">
+        <div class="floating-box" style="width: 50px; height: 50px; top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="floating-box" style="width: 30px; height: 30px; top: 60%; left: 80%; animation-delay: -3s;"></div>
+        <div class="floating-box" style="width: 40px; height: 40px; top: 30%; left: 60%; animation-delay: -6s;"></div>
+        <div class="floating-box" style="width: 25px; height: 25px; top: 70%; left: 30%; animation-delay: -9s;"></div>
+        <div class="floating-box" style="width: 35px; height: 35px; top: 40%; left: 40%; animation-delay: -12s;"></div>
+        <div class="floating-box" style="width: 45px; height: 45px; top: 15%; left: 85%; animation: float-around-alt 20s linear infinite;"></div>
+        <div class="floating-box" style="width: 35px; height: 35px; top: 75%; left: 15%; animation: float-around-alt 18s linear infinite; animation-delay: -5s;"></div>
+        <div class="floating-box" style="width: 30px; height: 30px; top: 45%; left: 75%; animation: float-around-alt 22s linear infinite; animation-delay: -10s;"></div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo">InvenTrack</div>
+            <a href="project.html" class="login-btn">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Simplify Your Inventory Management</h1>
+            <p>A powerful and easy-to-use system for tracking products, orders, and suppliers.</p>
+        </section>
+
+        <section class="features">
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">
+                        <i class="ri-box-3-line ri-2x"></i>
+                    </div>
+                    <h3>Product Management</h3>
+                    <p>Track stock levels and pricing</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">
+                        <i class="ri-shopping-cart-2-line ri-2x"></i>
+                    </div>
+                    <h3>Order Processing</h3>
+                    <p>Manage orders efficiently</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">
+                        <i class="ri-bar-chart-box-line ri-2x"></i>
+                    </div>
+                    <h3>Real-time Stats</h3>
+                    <p>Monitor key metrics instantly</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 InvenTrack. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const boxes = document.querySelectorAll('.floating-box');
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            boxes.forEach(box => {
+                const boxRect = box.getBoundingClientRect();
+                const boxCenterX = boxRect.left + boxRect.width / 2;
+                const boxCenterY = boxRect.top + boxRect.height / 2;
+
+                const deltaX = mouseX - boxCenterX;
+                const deltaY = mouseY - boxCenterY;
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                if (distance < 200) {
+                    const angle = Math.atan2(deltaY, deltaX);
+                    const push = 50 * (1 - distance / 200);
+                    const moveX = Math.cos(angle) * -push;
+                    const moveY = Math.sin(angle) * -push;
+                    
+                    box.style.transform += ` translate(${moveX}px, ${moveY}px)`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
