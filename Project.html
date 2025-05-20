@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management System</title>
+    <style>
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+        }
+
+        /* Login Page */
+        .login-container {
+            width: 400px;
+            margin: 100px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border-radius: 50%;
+            top: -150px;
+            right: -150px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .login-container::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            border-radius: 50%;
+            bottom: -100px;
+            left: -100px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .login-form {
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Login Improvements */
+        .login-form input:invalid {
+            border-color: #e74c3c;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        .login-container h2 {
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .login-form button {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1000;
+            height: 100vh;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 0% 0%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 100% 100%, rgba(46, 204, 113, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .sidebar.collapsed {
+            margin-left: -250px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 12px 15px;
+            margin: 4px 0;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-link:hover {
+            background: #34495e;
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: #3498db;
+            color: white;
+        }
+
+        /* Sidebar Toggle Button */
+        .sidebar-toggle {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            z-index: 1001;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .sidebar-toggle:hover {
+            background: #34495e;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
+        }
+
+        .main-content::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .data-table th {
+            background: #2c3e50;
+            color: white;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-table th::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Forms */
+        .form-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .form-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 500px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.05) 0%, transparent 70%);
+            transform: translate(50%, -50%);
+            pointer-events: none;
+        }
+
+        .form-modal.active .form-content {
+            transform: translateY(0);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        /* Order Status Styles */
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .status-pending {
+            background: #ffeaa7;
+            color: #d35400;
+        }
+
+        .status-processing {
+            background: #81ecec;
+            color: #00666d;
+        }
+
+        .status-completed {
+            background: #55efc4;
+            color: #00663c;
+        }
+
+        .status-cancelled {
+            background: #ff7675;
+            color: #fff;
+        }
+
+        /* Form Improvements */
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, var(--card-start) 0%, var(--card-end) 100%);
+            color: white;
+        }
+
+        .stat-card:nth-child(1) {
+            --card-start: #FF6B6B;
+            --card-end: #FF8E8E;
+        }
+
+        .stat-card:nth-child(2) {
+            --card-start: #4ECDC4;
+            --card-end: #45B7D1;
+        }
+
+        .stat-card:nth-child(3) {
+            --card-start: #96C93D;
+            --card-end: #7AA93C;
+        }
+
+        .stat-card .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .stat-card h4 {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 0;
+        }
+
+        .stat-card .stat-change {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        @keyframes countUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Typography Improvements */
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1.25rem;
+            color: #2c3e50;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #34495e;
+        }
+
+        .sidebar h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Responsive Improvements */
+        @media (max-width: 768px) {
+            .sidebar-toggle {
+                display: flex;
+                opacity: 1;
+            }
+
+            .sidebar:not(.collapsed) + .main-content .sidebar-toggle {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 250px;
+                margin-left: 0;
+                transform: translateX(0);
+            }
+
+            .sidebar.collapsed {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding-top: 70px;
+            }
+        }
+
+        .search-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .search-select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <h2>Inventory Login</h2>
+        <form class="login-form" onsubmit="handleLogin(event)">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard" style="display: none;">
+        <!-- Sidebar Toggle Button -->
+        <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle Sidebar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Inventory</h2>
+            <a href="#" class="nav-link" onclick="showSection('dashboardHome')">Dashboard</a>
+            <a href="#" class="nav-link" onclick="showSection('products')">Products</a>
+            <a href="#" class="nav-link" onclick="showSection('orders')">Orders</a>
+            <a href="#" class="nav-link" onclick="showSection('suppliers')">Suppliers</a>
+            <a href="#" class="nav-link" onclick="logout()">Logout</a>
+        </div>
+
+        <!-- Main Content Sections -->
+        <div class="main-content">
+            <!-- Dashboard Home -->
+            <div id="dashboardHome">
+                <h3>Dashboard Overview</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <h4>Total Products</h4>
+                        <p id="totalProducts" class="counter">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🛍️</div>
+                        <h4>Total Orders</h4>
+                        <p id="totalOrders" class="counter">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🤝</div>
+                        <h4>Total Suppliers</h4>
+                        <p id="totalSuppliers" class="counter">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div id="products" style="display: none;">
+                <h3>Product Management</h3>
+                <div class="search-section">
+                    <div class="search-container">
+                        <input type="text" id="productSearchInput" placeholder="Search products..." class="search-input">
+                        <select id="productSearchCriteria" class="search-select">
+                            <option value="name">By Name</option>
+                            <option value="id">By ID</option>
+                            <option value="stock">By Stock</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="showProductForm()">Add Product</button>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productList"></tbody>
+                </table>
+            </div>
+
+            <!-- Orders Section -->
+            <div id="orders" style="display: none;">
+                <h3>Orders Management</h3>
+                <div class="search-section">
+                    <div class="search-container">
+                        <input type="text" id="orderSearchInput" placeholder="Search orders..." class="search-input">
+                        <select id="orderSearchCriteria" class="search-select">
+                            <option value="all">All</option>
+                            <option value="id">By Order ID</option>
+                            <option value="product">By Product</option>
+                            <option value="status">By Status</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="showOrderForm()">New Order</button>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderList"></tbody>
+                </table>
+            </div>
+
+            <!-- Suppliers Section -->
+            <div id="suppliers" style="display: none;">
+                <h3>Suppliers Management</h3>
+                <button class="btn btn-primary" onclick="showSupplierForm()">Add Supplier</button>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Products</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="supplierList"></tbody>
+                </table>
+            </div>
+
+            <!-- Add/Edit Product Form -->
+            <div id="productFormModal" class="form-modal">
+                <div class="form-content">
+                    <h3 id="formTitle">Add Product</h3>
+                    <form onsubmit="handleProductSubmit(event)">
+                        <input type="hidden" id="productId">
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Price</label>
+                            <input type="number" id="productPrice" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Stock Quantity</label>
+                            <input type="number" id="productStock" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add/Edit Supplier Form -->
+            <div id="supplierFormModal" class="form-modal">
+                <div class="form-content">
+                    <h3 id="supplierFormTitle">Add Supplier</h3>
+                    <form onsubmit="handleSupplierSubmit(event)">
+                        <input type="hidden" id="supplierId">
+                        <div class="form-group">
+                            <label>Supplier Name</label>
+                            <input type="text" id="supplierName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact</label>
+                            <input type="text" id="supplierContact" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Products (comma separated)</label>
+                            <input type="text" id="supplierProducts">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn" onclick="closeSupplierModal()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Order Status Form -->
+            <div id="orderFormModal" class="form-modal">
+                <div class="form-content">
+                    <h3 id="orderFormTitle">New Order</h3>
+                    <form onsubmit="handleOrderSubmit(event)">
+                        <input type="hidden" id="orderId">
+                        <div class="form-group">
+                            <label>Product</label>
+                            <select id="orderProduct" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" id="orderQuantity" required min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="orderStatus">
+                                <option value="pending">Pending</option>
+                                <option value="processing">Processing</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn" onclick="closeOrderModal()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock Database
+        let inventoryDB = {
+            users: [
+                {username: 'admin', password: 'admin'},
+                {username: 'user', password: 'user'},
+                {username: 'a', password: 'a'}
+            ],
+            products: JSON.parse(localStorage.getItem('products')) || [],
+            orders: JSON.parse(localStorage.getItem('orders')) || [],
+            suppliers: JSON.parse(localStorage.getItem('suppliers')) || []
+        };
+
+        // Login Handling
+        function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            const user = inventoryDB.users.find(u => 
+                u.username === username && u.password === password
+            );
+
+            if(user) {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'grid';
+                loadDashboard();
+            } else {
+                // Show error message
+                alert('Invalid credentials! Try admin/admin or user/user');
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('username').focus();
+            }
+        }
+
+        // Dashboard Functions
+        function loadDashboard() {
+            // Update all stats and render all lists
+            updateStats();
+            renderProductList();
+            renderSupplierList();
+            renderOrderList();
+            
+            // Show default section
+            showSection('dashboardHome');
+        }
+
+        // Update existing showSection function
+        function showSection(sectionId) {
+            document.querySelectorAll('.main-content > div').forEach(div => {
+                div.style.display = 'none';
+            });
+            const targetSection = document.getElementById(sectionId);
+            targetSection.style.display = 'block';
+            
+            // Animate section entrance
+            targetSection.style.opacity = '0';
+            targetSection.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                targetSection.style.transition = 'all 0.3s ease';
+                targetSection.style.opacity = '1';
+                targetSection.style.transform = 'translateY(0)';
+            }, 50);
+
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick').includes(sectionId)) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Product Management
+        function updateProductStats() {
+            document.getElementById('totalProducts').textContent = 
+                inventoryDB.products.length;
+        }
+
+        function renderProductList(products = inventoryDB.products) {
+            const tbody = document.getElementById('productList');
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>$${product.price.toFixed(2)}</td>
+                    <td>${product.stock}</td>
+                    <td>
+                        <button class="btn btn-primary" 
+                            onclick="editProduct(${product.id})">Edit</button>
+                        <button class="btn btn-danger" 
+                            onclick="deleteProduct(${product.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showProductForm(product = null) {
+            const modal = document.getElementById('productFormModal');
+            const formTitle = document.getElementById('formTitle');
+            
+            if(product) {
+                formTitle.textContent = 'Edit Product';
+                document.getElementById('productId').value = product.id;
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productStock').value = product.stock;
+            } else {
+                formTitle.textContent = 'Add Product';
+                document.getElementById('productId').value = '';
+                document.getElementById('productName').value = '';
+                document.getElementById('productPrice').value = '';
+                document.getElementById('productStock').value = '';
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function handleProductSubmit(e) {
+            e.preventDefault();
+            const product = {
+                id: document.getElementById('productId').value || Date.now(),
+                name: document.getElementById('productName').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                stock: parseInt(document.getElementById('productStock').value)
+            };
+
+            const index = inventoryDB.products.findIndex(p => p.id == product.id);
+            if(index > -1) {
+                inventoryDB.products[index] = product;
+            } else {
+                inventoryDB.products.push(product);
+            }
+
+            localStorage.setItem('products', JSON.stringify(inventoryDB.products));
+            closeModal();
+            renderProductList();
+            updateProductStats();
+        }
+
+        function editProduct(id) {
+            const product = inventoryDB.products.find(p => p.id === id);
+            if(product) {
+                showProductForm(product);
+            }
+        }
+
+        function deleteProduct(id) {
+            if(confirm('Are you sure you want to delete this product?')) {
+                inventoryDB.products = inventoryDB.products.filter(p => p.id !== id);
+                localStorage.setItem('products', JSON.stringify(inventoryDB.products));
+                renderProductList();
+                updateProductStats();
+            }
+        }
+
+        // Supplier Management Functions
+        function showSupplierForm(supplier = null) {
+            const modal = document.getElementById('supplierFormModal');
+            const formTitle = document.getElementById('supplierFormTitle');
+            
+            if(supplier) {
+                formTitle.textContent = 'Edit Supplier';
+                document.getElementById('supplierId').value = supplier.id;
+                document.getElementById('supplierName').value = supplier.name;
+                document.getElementById('supplierContact').value = supplier.contact;
+                document.getElementById('supplierProducts').value = supplier.products.join(', ');
+            } else {
+                formTitle.textContent = 'Add Supplier';
+                document.getElementById('supplierId').value = '';
+                document.getElementById('supplierName').value = '';
+                document.getElementById('supplierContact').value = '';
+                document.getElementById('supplierProducts').value = '';
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function handleSupplierSubmit(e) {
+            e.preventDefault();
+            const supplier = {
+                id: document.getElementById('supplierId').value || Date.now(),
+                name: document.getElementById('supplierName').value,
+                contact: document.getElementById('supplierContact').value,
+                products: document.getElementById('supplierProducts').value.split(',').map(p => p.trim())
+            };
+
+            const index = inventoryDB.suppliers.findIndex(s => s.id == supplier.id);
+            if(index > -1) {
+                inventoryDB.suppliers[index] = supplier;
+            } else {
+                inventoryDB.suppliers.push(supplier);
+            }
+
+            localStorage.setItem('suppliers', JSON.stringify(inventoryDB.suppliers));
+            closeSupplierModal();
+            renderSupplierList();
+            updateStats();
+        }
+
+        // Order Management Functions
+        function showOrderForm(order = null) {
+            const modal = document.getElementById('orderFormModal');
+            const productSelect = document.getElementById('orderProduct');
+            const quantityInput = document.getElementById('orderQuantity');
+            
+            // Populate product dropdown
+            productSelect.innerHTML = inventoryDB.products.map(p => 
+                `<option value="${p.id}">${p.name} (In Stock: ${p.stock})</option>`
+            ).join('');
+
+            // Add quantity validation
+            quantityInput.addEventListener('input', function() {
+                const selectedProduct = inventoryDB.products.find(
+                    p => p.id == productSelect.value
+                );
+                if (selectedProduct && this.value > selectedProduct.stock) {
+                    this.setCustomValidity(`Maximum available stock is ${selectedProduct.stock}`);
+                } else {
+                    this.setCustomValidity('');
+                }
+            });
+
+            if(order) {
+                document.getElementById('orderId').value = order.id;
+                document.getElementById('orderProduct').value = order.productId;
+                document.getElementById('orderQuantity').value = order.quantity;
+                document.getElementById('orderStatus').value = order.status;
+            } else {
+                document.getElementById('orderId').value = '';
+                document.getElementById('orderQuantity').value = '';
+                document.getElementById('orderStatus').value = 'pending';
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function handleOrderSubmit(e) {
+            e.preventDefault();
+            const productId = document.getElementById('orderProduct').value;
+            const quantity = parseInt(document.getElementById('orderQuantity').value);
+            const newStatus = document.getElementById('orderStatus').value;
+            const orderId = document.getElementById('orderId').value;
+
+            // Check if we have enough stock
+            const product = inventoryDB.products.find(p => p.id == productId);
+            if (!product) {
+                alert('Product not found!');
+                return;
+            }
+
+            // For new orders or status changes to 'completed'
+            if (!orderId || newStatus === 'completed') {
+                if (quantity > product.stock) {
+                    alert('Not enough stock available!');
+                    return;
+                }
+            }
+
+            const order = {
+                id: orderId || Date.now(),
+                productId,
+                quantity,
+                status: newStatus,
+                date: new Date().toISOString()
+            };
+
+            const index = inventoryDB.orders.findIndex(o => o.id == order.id);
+            const oldOrder = index > -1 ? inventoryDB.orders[index] : null;
+
+            // Handle stock updates
+            if (newStatus === 'completed') {
+                // If updating existing order that was already completed, don't double-count
+                if (!(oldOrder && oldOrder.status === 'completed')) {
+                    product.stock -= quantity;
+                }
+            } else if (oldOrder && oldOrder.status === 'completed') {
+                // If changing from completed to another status, restore stock
+                product.stock += oldOrder.quantity;
+            }
+
+            // Save order
+            if (index > -1) {
+                inventoryDB.orders[index] = order;
+            } else {
+                inventoryDB.orders.push(order);
+            }
+
+            // Update storage
+            localStorage.setItem('products', JSON.stringify(inventoryDB.products));
+            localStorage.setItem('orders', JSON.stringify(inventoryDB.orders));
+
+            closeOrderModal();
+            renderOrderList();
+            renderProductList(); // Update product list to show new quantities
+            updateStats();
+        }
+
+        function renderSupplierList() {
+            const tbody = document.getElementById('supplierList');
+            if (!tbody) return;
+            
+            tbody.innerHTML = inventoryDB.suppliers.map(supplier => `
+                <tr>
+                    <td>${supplier.id}</td>
+                    <td>${supplier.name}</td>
+                    <td>${supplier.contact}</td>
+                    <td>${supplier.products.join(', ')}</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editSupplier(${supplier.id})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteSupplier(${supplier.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderOrderList(orders = inventoryDB.orders) {
+            const tbody = document.getElementById('orderList');
+            if (!tbody) return;
+            
+            tbody.innerHTML = orders.map(order => {
+                const product = inventoryDB.products.find(p => p.id == order.productId);
+                return `
+                    <tr>
+                        <td>${order.id}</td>
+                        <td>${product ? product.name : 'Unknown Product'}</td>
+                        <td>${order.quantity}</td>
+                        <td><span class="status-badge status-${order.status}">${order.status}</span></td>
+                        <td>
+                            <button class="btn btn-primary" onclick="editOrder(${order.id})">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteOrder(${order.id})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Update stats function
+        function updateStats() {
+            const stats = {
+                totalProducts: inventoryDB.products.length,
+                totalOrders: inventoryDB.orders.length,
+                totalSuppliers: inventoryDB.suppliers.length
+            };
+
+            Object.entries(stats).forEach(([id, value]) => {
+                const element = document.getElementById(id);
+                animateCounter(element, value);
+                element.style.animation = 'countUp 0.5s ease forwards';
+            });
+        }
+
+        // Utility Functions
+        function closeModal() {
+            document.getElementById('productFormModal').style.display = 'none';
+        }
+
+        function closeSupplierModal() {
+            document.getElementById('supplierFormModal').style.display = 'none';
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderFormModal').style.display = 'none';
+        }
+
+        function logout() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'block';
+        }
+
+        // Initialize sample data
+        if(inventoryDB.products.length === 0) {
+            inventoryDB.products = [
+                {id: 1, name: "Laptop", price: 999.99, stock: 15},
+                {id: 2, name: "Mouse", price: 25.50, stock: 42}
+            ];
+            localStorage.setItem('products', JSON.stringify(inventoryDB.products));
+        }
+
+        // Add these functions before the DOMContentLoaded event
+        function editSupplier(id) {
+            const supplier = inventoryDB.suppliers.find(s => s.id === id);
+            if(supplier) {
+                showSupplierForm(supplier);
+            }
+        }
+
+        function deleteSupplier(id) {
+            if(confirm('Are you sure you want to delete this supplier?')) {
+                inventoryDB.suppliers = inventoryDB.suppliers.filter(s => s.id !== id);
+                localStorage.setItem('suppliers', JSON.stringify(inventoryDB.suppliers));
+                renderSupplierList();
+                updateStats();
+            }
+        }
+
+        function editOrder(id) {
+            const order = inventoryDB.orders.find(o => o.id === id);
+            if(order) {
+                showOrderForm(order);
+            }
+        }
+
+        function deleteOrder(id) {
+            if(confirm('Are you sure you want to delete this order?')) {
+                const order = inventoryDB.orders.find(o => o.id === id);
+                if (order && order.status === 'completed') {
+                    // Restore stock for completed orders being deleted
+                    const product = inventoryDB.products.find(p => p.id == order.productId);
+                    if (product) {
+                        product.stock += order.quantity;
+                        localStorage.setItem('products', JSON.stringify(inventoryDB.products));
+                    }
+                }
+                
+                inventoryDB.orders = inventoryDB.orders.filter(o => o.id !== id);
+                localStorage.setItem('orders', JSON.stringify(inventoryDB.orders));
+                renderOrderList();
+                renderProductList();
+                updateStats();
+            }
+        }
+
+        // Add these functions at the beginning of your script section
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            function updateSidebarState() {
+                const isCollapsed = sidebar.classList.contains('collapsed');
+                localStorage.setItem('sidebarCollapsed', isCollapsed);
+                
+                // Update toggle button visibility
+                if (window.innerWidth <= 768) {
+                    sidebarToggle.style.opacity = isCollapsed ? '1' : '0';
+                    sidebarToggle.style.pointerEvents = isCollapsed ? 'auto' : 'none';
+                } else {
+                    sidebarToggle.style.display = 'none';
+                }
+            }
+            
+            // Single click handler for toggle button
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+                updateSidebarState();
+            });
+
+            // Restore sidebar state
+            const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+            if (isCollapsed && window.innerWidth <= 768) {
+                sidebar.classList.add('collapsed');
+                mainContent.classList.add('expanded');
+            }
+
+            // Handle nav link clicks
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+
+                    if (window.innerWidth <= 768) {
+                        setTimeout(() => {
+                            sidebar.classList.add('collapsed');
+                            mainContent.classList.add('expanded');
+                            updateSidebarState();
+                        }, 150);
+                    }
+                });
+            });
+
+            // Outside click handling
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 && 
+                    !sidebar.contains(e.target) && 
+                    !sidebarToggle.contains(e.target)) {
+                    sidebar.classList.add('collapsed');
+                    mainContent.classList.add('expanded');
+                    updateSidebarState();
+                }
+            });
+
+            // Window resize handling
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('expanded');
+                    sidebarToggle.style.display = 'none';
+                } else {
+                    sidebarToggle.style.display = 'flex';
+                    updateSidebarState();
+                }
+            });
+
+            // Initial state
+            updateSidebarState();
+            loadDashboard();
+        });
+
+        // Initialize sample data for all collections
+        if(inventoryDB.products.length === 0) {
+            inventoryDB.products = [
+                {id: 1, name: "Laptop", price: 999.99, stock: 15},
+                {id: 2, name: "Mouse", price: 25.50, stock: 42}
+            ];
+            localStorage.setItem('products', JSON.stringify(inventoryDB.products));
+        }
+
+        if(inventoryDB.suppliers.length === 0) {
+            inventoryDB.suppliers = [
+                {id: 1, name: "Tech Supplies Co", contact: "contact@techsupplies.com", products: ["Laptop", "Mouse"]}
+            ];
+            localStorage.setItem('suppliers', JSON.stringify(inventoryDB.suppliers));
+        }
+
+        if(inventoryDB.orders.length === 0) {
+            inventoryDB.orders = [
+                {
+                    id: 1,
+                    productId: 1,
+                    quantity: 5,
+                    status: "pending",
+                    date: new Date().toISOString()
+                }
+            ];
+            localStorage.setItem('orders', JSON.stringify(inventoryDB.orders));
+        }
+
+        // Add to the existing script section
+        document.getElementById('productSearchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const criteria = document.getElementById('productSearchCriteria').value;
+            
+            const filteredProducts = inventoryDB.products.filter(product => {
+                switch(criteria) {
+                    case 'name':
+                        return product.name.toLowerCase().includes(searchTerm);
+                    case 'id':
+                        return product.id.toString().includes(searchTerm);
+                    case 'stock':
+                        return product.stock.toString().includes(searchTerm);
+                    default:
+                        return true;
+                }
+            });
+            
+            renderProductList(filteredProducts);
+        });
+
+        document.getElementById('orderSearchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const criteria = document.getElementById('orderSearchCriteria').value;
+            
+            const filteredOrders = inventoryDB.orders.filter(order => {
+                const product = inventoryDB.products.find(p => p.id == order.productId);
+                
+                switch(criteria) {
+                    case 'id':
+                        return order.id.toString().includes(searchTerm);
+                    case 'product':
+                        return product && product.name.toLowerCase().includes(searchTerm);
+                    case 'status':
+                        return order.status.toLowerCase().includes(searchTerm);
+                    case 'all':
+                        return (
+                            order.id.toString().includes(searchTerm) ||
+                            (product && product.name.toLowerCase().includes(searchTerm)) ||
+                            order.status.toLowerCase().includes(searchTerm)
+                        );
+                    default:
+                        return true;
+                }
+            });
+            
+            renderOrderList(filteredOrders);
+        });
+
+        function animateCounter(element, target) {
+            const duration = 1000;
+            const start = parseInt(element.textContent);
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                element.textContent = Math.round(current);
+
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                }
+            }, 16);
+        }
+    </script>
+</body>
+</html>
