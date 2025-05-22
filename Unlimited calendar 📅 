@@ -1,0 +1,258 @@
+# m_days=month day-1
+day=1
+date=0
+week=1
+month=0
+year=2025
+year_days=0
+print("M___T___W___T___F___S___SU")
+while week<10000:
+    #m_days=[31,feb_days,31,30,31,30,31,31,30,31,30,31]
+    for i in range(0,7):
+        if day<6:
+            day+=1
+        else:
+            day=0
+            week+=1
+        date+=1
+        year_days+=1
+        #print(d_list[day],date)
+        if date==1 and day==1:
+            if m_days[month]==31:
+                print("M___T___W___T___F___S___SU")
+                print("           ",date,"       ",date+1,"      ",date+2,"      ",date+3,"       ",date+4,"     ",date+5)
+                print(date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11,"      ",date+12)
+                print(date+13,"     ",date+14,"    ",date+15,"    ",date+16,"    ",date+17,"    ",date+18,"     ",date+19)
+                print(date+20,"     ",date+21,"    ",date+22,"    ",date+23,"    ",date+24,"    ",date+25,"     ",date+26)
+                print(date+27,"     ",date+28,"    ",date+29,"    ",date+30)
+            if m_days[month]==30:
+                print("M___T___W___T___F___S___SU")
+                print("           ",date,"       ",date+1,"      ",date+2,"      ",date+3,"       ",date+4,"     ",date+5)
+                print(date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11,"      ",date+12)
+                print(date+13,"     ",date+14,"    ",date+15,"    ",date+16,"    ",date+17,"    ",date+18,"     ",date+19)
+                print(date+20,"     ",date+21,"    ",date+22,"    ",date+23,"    ",date+24,"    ",date+25,"     ",date+26)
+                print(date+27,"     ",date+28,"    ",date+29)
+            if m_days[month]==28 and year%4 !=0:
+                print("M___T___W___T___F___S___SU")
+                print("           ",date,"       ",date+1,"      ",date+2,"      ",date+3,"       ",date+4,"     ",date+5)
+                print(date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11,"      ",date+12)
+                print(date+13,"     ",date+14,"    ",date+15,"    ",date+16,"    ",date+17,"    ",date+18,"     ",date+19)
+                print(date+20,"     ",date+21,"    ",date+22,"    ",date+23,"    ",date+24,"    ",date+25,"     ",date+26)
+                print(date+27)
+            if m_days[month]==28 and year%4 ==0:
+                print("M___T___W___T___F___S___SU")
+                print("           ",date,"       ",date+1,"      ",date+2,"      ",date+3,"       ",date+4,"     ",date+5)
+                print(date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11,"      ",date+12)
+                print(date+13,"     ",date+14,"    ",date+15,"    ",date+16,"    ",date+17,"    ",date+18,"     ",date+19)
+                print(date+20,"     ",date+21,"    ",date+22,"    ",date+23,"    ",date+24,"    ",date+25,"     ",date+26)
+                print(date+27,"     ",date+28)
+        if date==1 and day==0:
+            if m_days[month]==31:
+                print("M___T___W___T___F___S___SU")
+                print(date,"       ",date+1,"       ",date+2,"       ",date+3,"        ",date+4,"      ",date+5,"      ",date+6)
+                print(date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11,"      ",date+12,"      ",date+13)
+                print(date+14,"     ",date+15,"    ",date+16,"    ",date+17,"    ",date+18,"    ",date+19,"     ",date+20)
+                print(date+21,"     ",date+22,"    ",date+23,"    ",date+24,"    ",date+25,"    ",date+26,"     ",date+27)
+                print(date+28,"     ",date+29,"    ",date+30)
+            if m_days[month]==30:
+                print("M___T___W___T___F___S___SU")
+                print(date,"       ",date+1,"       ",date+2,"       ",date+3,"        ",date+4,"      ",date+5,"      ",date+6)
+                print(date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11,"      ",date+12,"      ",date+13)
+                print(date+14,"     ",date+15,"    ",date+16,"    ",date+17,"    ",date+18,"    ",date+19,"     ",date+20)
+                print(date+21,"     ",date+22,"    ",date+23,"    ",date+24,"    ",date+25,"    ",date+26,"     ",date+27)
+                print(date+28,"     ",date+29)
+            if m_days[month]==28 and year%4 !=0:
+                print("M___T___W___T___F___S___SU")
+                print(date,"       ",date+1,"       ",date+2,"       ",date+3,"        ",date+4,"      ",date+5,"      ",date+6)
+                print(date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11,"      ",date+12,"      ",date+13)
+                print(date+14,"     ",date+15,"    ",date+16,"    ",date+17,"    ",date+18,"    ",date+19,"     ",date+20)
+                print(date+21,"     ",date+22,"    ",date+23,"    ",date+24,"    ",date+25,"    ",date+26,"     ",date+27)
+            if m_days[month]==28 and year%4 ==0:
+                print("M___T___W___T___F___S___SU")
+                print(date,"       ",date+1,"       ",date+2,"       ",date+3,"        ",date+4,"      ",date+5,"      ",date+6)
+                print(date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11,"      ",date+12,"      ",date+13)
+                print(date+14,"     ",date+15,"    ",date+16,"    ",date+17,"    ",date+18,"    ",date+19,"     ",date+20)
+                print(date+21,"     ",date+22,"    ",date+23,"    ",date+24,"    ",date+25,"    ",date+26,"     ",date+27)
+                print(date+28)
+        if date==1 and day==2:
+            if m_days[month]==31:
+                print("M___T___W___T___F___S___SU")
+                print("                    ",date,"       ",date+1,"      ",date+2,"      ",date+3,"       ",date+4)
+                print(date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11)
+                print(date+12,"     ",date+13,"    ",date+14,"    ",date+15,"    ",date+16,"    ",date+17,"     ",date+18)
+                print(date+19,"     ",date+20,"    ",date+21,"    ",date+22,"    ",date+23,"    ",date+24,"     ",date+25)
+                print(date+26,"     ",date+27,"    ",date+28,"    ",date+29,"    ",date+30)
+            if m_days[month]==30:
+                print("M___T___W___T___F___S___SU")
+                print("                    ",date,"       ",date+1,"      ",date+2,"      ",date+3,"       ",date+4)
+                print(date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11)
+                print(date+12,"     ",date+13,"    ",date+14,"    ",date+15,"    ",date+16,"    ",date+17,"     ",date+18)
+                print(date+19,"     ",date+20,"    ",date+21,"    ",date+22,"    ",date+23,"    ",date+24,"     ",date+25)
+                print(date+26,"     ",date+27,"    ",date+28,"    ",date+29)
+            if m_days[month]==28 and year%4 !=0:
+                print("M___T___W___T___F___S___SU")
+                print("                    ",date,"       ",date+1,"      ",date+2,"      ",date+3,"       ",date+4)
+                print(date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11)
+                print(date+12,"     ",date+13,"    ",date+14,"    ",date+15,"    ",date+16,"    ",date+17,"     ",date+18)
+                print(date+19,"     ",date+20,"    ",date+21,"    ",date+22,"    ",date+23,"    ",date+24,"     ",date+25)
+                print(date+26,"     ",date+27)
+            if m_days[month]==28 and year%4 ==0:
+                print("M___T___W___T___F___S___SU")
+                print("                    ",date,"       ",date+1,"      ",date+2,"      ",date+3,"       ",date+4)
+                print(date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10,"      ",date+11)
+                print(date+12,"     ",date+13,"    ",date+14,"    ",date+15,"    ",date+16,"    ",date+17,"     ",date+18)
+                print(date+19,"     ",date+20,"    ",date+21,"    ",date+22,"    ",date+23,"    ",date+24,"     ",date+25)
+                print(date+26,"     ",date+27,"    ",date+28)
+        if date==1 and day==3:
+            if m_days[month]==31:
+                print("M___T___W__T__F__S__SU")
+                print("                              ",date,"       ",date+1,"      ",date+2,"      ",date+3)
+                print(date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10)
+                print(date+11,"     ",date+12,"    ",date+13,"    ",date+14,"    ",date+15,"    ",date+16,"     ",date+17)
+                print(date+18,"     ",date+19,"    ",date+20,"    ",date+21,"    ",date+22,"    ",date+23,"     ",date+24)
+                print(date+25,"     ",date+26,"    ",date+27,"    ",date+28,"    ",date+29,"    ",date+30)
+            if m_days[month]==30:
+                print("M___T___W___T___F___S___SU")
+                print("                              ",date,"       ",date+1,"      ",date+2,"      ",date+3)
+                print(date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10)
+                print(date+11,"     ",date+12,"    ",date+13,"    ",date+14,"    ",date+15,"    ",date+16,"     ",date+17)
+                print(date+18,"     ",date+19,"    ",date+20,"    ",date+21,"    ",date+22,"    ",date+23,"     ",date+24)
+                print(date+25,"     ",date+26,"    ",date+27,"    ",date+28,"    ",date+29)
+            if m_days[month]==28 and year%4 !=0:
+                print("M___T___W___T___F___S___SU")
+                print("                              ",date,"       ",date+1,"      ",date+2,"      ",date+3)
+                print(date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10)
+                print(date+11,"     ",date+12,"    ",date+13,"    ",date+14,"    ",date+15,"    ",date+16,"     ",date+17)
+                print(date+18,"     ",date+19,"    ",date+20,"    ",date+21,"    ",date+22,"    ",date+23,"     ",date+24)
+                print(date+25,"     ",date+26,"    ",date+27)
+            if m_days[month]==28 and year%4 ==0:
+                print("M___T___W___T___F___S___SU")
+                print("                              ",date,"       ",date+1,"      ",date+2,"      ",date+3)
+                print(date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9,"      ",date+10)
+                print(date+11,"     ",date+12,"    ",date+13,"    ",date+14,"    ",date+15,"    ",date+16,"     ",date+17)
+                print(date+18,"     ",date+19,"    ",date+20,"    ",date+21,"    ",date+22,"    ",date+23,"     ",date+24)
+                print(date+25,"     ",date+26,"    ",date+27,"    ",date+28)
+        if date==1 and day==4:
+            if m_days[month]==31:
+                print("M___T___W__T__F__S__SU")
+                print("                                      ",date,"       ",date+1,"      ",date+2)
+                print(date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9)
+                print(date+10,"     ",date+11,"    ",date+12,"    ",date+13,"    ",date+14,"    ",date+15,"     ",date+16)
+                print(date+17,"     ",date+18,"    ",date+19,"    ",date+20,"    ",date+21,"    ",date+22,"     ",date+23)
+                print(date+24,"     ",date+25,"    ",date+26,"    ",date+27,"    ",date+28,"    ",date+29,"     ",date+30)
+            if m_days[month]==30:
+                print("M___T___W___T___F___S___SU")
+                print("                                       ",date,"       ",date+1,"      ",date+2)
+                print(date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9)
+                print(date+10,"     ",date+10,"    ",date+12,"    ",date+13,"    ",date+14,"    ",date+15,"     ",date+16)
+                print(date+17,"     ",date+18,"    ",date+19,"    ",date+20,"    ",date+21,"    ",date+22,"     ",date+23)
+                print(date+24,"     ",date+25,"    ",date+26,"    ",date+27,"    ",date+28,"    ",date+29)
+            if m_days[month]==28 and year%4 !=0:
+                print("M___T___W___T___F___S___SU")
+                print("                                       ",date,"       ",date+1,"      ",date+2)
+                print(date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9)
+                print(date+10,"     ",date+10,"    ",date+12,"    ",date+13,"    ",date+14,"    ",date+15,"     ",date+16)
+                print(date+17,"     ",date+18,"    ",date+19,"    ",date+20,"    ",date+21,"    ",date+22,"     ",date+23)
+                print(date+24,"     ",date+25,"    ",date+26,"    ",date+27)
+            if m_days[month]==28 and year%4 ==0:
+                print("M___T___W___T___F___S___SU")
+                print("                                       ",date,"       ",date+1,"      ",date+2)
+                print(date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8,"      ",date+9)
+                print(date+10,"     ",date+10,"    ",date+12,"    ",date+13,"    ",date+14,"    ",date+15,"     ",date+16)
+                print(date+17,"     ",date+18,"    ",date+19,"    ",date+20,"    ",date+21,"    ",date+22,"     ",date+23)
+                print(date+24,"     ",date+25,"    ",date+26,"    ",date+27,"    ",date+28)
+        if date==1 and day==5:
+            if m_days[month]==31:
+                print("M___T___W__T__F__S__SU")
+                print("                                                ",date,"       ",date+1)
+                print(date+2,"      ",date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8)
+                print(date+9,"     ",date+10,"    ",date+11,"    ",date+12,"    ",date+13,"    ",date+14,"     ",date+15)
+                print(date+16,"     ",date+17,"    ",date+18,"    ",date+19,"    ",date+20,"    ",date+21,"     ",date+22)
+                print(date+23,"     ",date+24,"    ",date+25,"    ",date+26,"    ",date+27,"    ",date+28,"     ",date+29)
+                print(date+30)
+            if m_days[month]==30:
+                print("M___T___W___T___F___S___SU")
+                print("                                                 ",date,"      ",date+1)
+                print(date+2,"      ",date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8)
+                print(date+9,"     ",date+10,"    ",date+11,"    ",date+12,"    ",date+13,"    ",date+14,"     ",date+15)
+                print(date+16,"     ",date+17,"    ",date+18,"    ",date+19,"    ",date+20,"    ",date+21,"     ",date+22)
+                print(date+23,"     ",date+24,"    ",date+25,"    ",date+26,"    ",date+27,"    ",date+28,"     ",date+29)
+            if m_days[month]==28 and year%4 !=0:
+                print("M___T___W___T___F___S___SU")
+                print("                                                 ",date,"      ",date+1)
+                print(date+2,"      ",date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8)
+                print(date+9,"     ",date+10,"    ",date+11,"    ",date+12,"    ",date+13,"    ",date+14,"     ",date+15)
+                print(date+16,"     ",date+17,"    ",date+18,"    ",date+19,"    ",date+20,"    ",date+21,"     ",date+22)
+                print(date+23,"     ",date+24,"    ",date+25,"    ",date+26,"    ",date+27)
+            if m_days[month]==28 and year%4 ==0:
+                print("M___T___W___T___F___S___SU")
+                print("                                                 ",date,"      ",date+1)
+                print(date+2,"      ",date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7,"      ",date+8)
+                print(date+9,"     ",date+10,"    ",date+11,"    ",date+12,"    ",date+13,"    ",date+14,"     ",date+15)
+                print(date+16,"     ",date+17,"    ",date+18,"    ",date+19,"    ",date+20,"    ",date+21,"     ",date+22)
+                print(date+23,"     ",date+24,"    ",date+25,"    ",date+26,"    ",date+27,"    ",date+28)
+        if date==1 and day==6:
+            if m_days[month]==31:
+                print("M___T___W__T__F__S__SU")
+                print("                                                       ",date)
+                print(date+1,"      ",date+2,"      ",date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7)
+                print(date+8,"     ",date+9,"    ",date+10,"    ",date+11,"    ",date+12,"    ",date+13,"     ",date+14)
+                print(date+15,"     ",date+16,"    ",date+17,"    ",date+18,"    ",date+19,"    ",date+20,"     ",date+21)
+                print(date+22,"     ",date+23,"    ",date+24,"    ",date+25,"    ",date+26,"    ",date+27,"     ",date+28)
+                print(date+29,"     ",date+30)
+            if m_days[month]==30:
+                print("M___T___W___T___F___S___SU")
+                print("                                                       ",date)
+                print(date+1,"      ",date+2,"      ",date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7)
+                print(date+8,"     ",date+9,"    ",date+10,"    ",date+11,"    ",date+12,"    ",date+13,"     ",date+14)
+                print(date+15,"     ",date+16,"    ",date+17,"    ",date+18,"    ",date+19,"    ",date+20,"     ",date+21)
+                print(date+22,"     ",date+23,"    ",date+24,"    ",date+25,"    ",date+26,"    ",date+27,"     ",date+28)
+                print(date+29)
+            if m_days[month]==28 and year%4 !=0:
+                print("M___T___W___T___F___S___SU")
+                print("                                                       ",date)
+                print(date+1,"      ",date+2,"      ",date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7)
+                print(date+8,"     ",date+9,"    ",date+10,"    ",date+11,"    ",date+12,"    ",date+13,"     ",date+14)
+                print(date+15,"     ",date+16,"    ",date+17,"    ",date+18,"    ",date+19,"    ",date+20,"     ",date+21)
+                print(date+22,"     ",date+23,"    ",date+24,"    ",date+25,"    ",date+26,"    ",date+27)
+            if m_days[month]==28 and year%4 ==0:
+                print("M___T___W___T___F___S___SU")
+                print("                                                       ",date)
+                print(date+1,"      ",date+2,"      ",date+3,"      ",date+4,"      ",date+5,"      ",date+6,"      ",date+7)
+                print(date+8,"     ",date+9,"    ",date+10,"    ",date+11,"    ",date+12,"    ",date+13,"     ",date+14)
+                print(date+15,"     ",date+16,"    ",date+17,"    ",date+18,"    ",date+19,"    ",date+20,"     ",date+21)
+                print(date+22,"     ",date+23,"    ",date+24,"    ",date+25,"    ",date+26,"    ",date+27,"     ",date+28)
+              
+                   
+                
+                    
+                
+                    
+                
+                    
+        #if day==1:
+        #if day==1:
+            #print(date,"    ",date+1)
+    #week+=1
+        if month==1 and (year%4)==0:
+            act_days=m_days[month]
+        else:
+            act_days=m_days[month]-1
+        if date>act_days:
+             if month<11:
+                 month+=1
+                 print("**********",m_list[month],"************")
+             else:
+                 year+=1
+                 month=0
+                 print("                                                                                                               ")
+                 print("##############",year,"##############")
+                 print("                                                                                                                 ")
+                 print("**********",m_list[month],"************")
+            
+             date=0
+print(year_days)
+    #print(d_list[day],":",m_list[month],":" ,date)
+    #print(d_list[day])
+#    print(week)
+#    
